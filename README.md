@@ -2,6 +2,13 @@
 
 A full-stack application for querying and analyzing business and technical documents using Azure OpenAI services.
 
+## Getting Started
+
+Choose your path:
+
+- **Option A: Deploy directly to Azure** (recommended for production)
+- **Option B: Set up locally for development** (see Manual Setup below)
+
 ## Features
 
 - Upload and analyze Executive Overview documents (Markdown)
@@ -13,17 +20,9 @@ A full-stack application for querying and analyzing business and technical docum
 
 ## Prerequisites
 
-- Azure subscription
-  - If you don't have one, [create a free Azure account](https://azure.microsoft.com/free/)
-  - Ensure your subscription has access to Azure OpenAI services
-- Azure OpenAI service with:
-  - Chat completion deployment
-  - Embedding deployment
-  - [Request access to Azure OpenAI](https://aka.ms/oai/access) if you haven't already
-- Azure Storage account
-  - [Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-create)
-  - Enable blob storage
-  - Create a container named 'uploads'
+- Azure subscription (see Detailed Setup Guide below for creation steps)
+- Azure OpenAI service (see Detailed Setup Guide)
+- Azure Storage account (see Detailed Setup Guide)
 - Required Azure permissions:
   - Owner or Contributor role on the subscription/resource group
   - Storage Blob Data Contributor role for the storage account
@@ -33,47 +32,47 @@ A full-stack application for querying and analyzing business and technical docum
 
 ### 1. Azure OpenAI Setup
 
-1. Create an Azure OpenAI resource:
-
-   - Go to [Azure Portal](https://portal.azure.com)
-   - Search for "Azure OpenAI"
-   - Click "Create"
+1. Go to [Azure Portal](https://portal.azure.com)
+2. Search for "Azure OpenAI"
+3. Click "Create"
+4. On the Basics tab:
    - Select your subscription and resource group
-   - Choose a region where Azure OpenAI is available
-   - Create deployments for:
-     - Chat completion (e.g., gpt-35-turbo)
-     - Embedding (e.g., text-embedding-ada-002)
-
-2. Get your Azure OpenAI credentials:
-   - Note down the endpoint URL
-   - Generate an API key from the "Keys and Endpoint" section
-   - Record the deployment names you created
+   - Choose a unique name
+   - Choose a supported region
+   - Select Pricing Tier: Standard S0
+5. Click "Next"
+6. On the Network tab, leave the default settings
+7. Click "Next"
+8. On the Tags tab, you can add tags if desired
+9. Click "Next"
+10. On the Review tab, review your settings
+11. Click "Create"
+12. After creation, note your resource name and endpoint.
 
 ### 2. Azure Storage Setup
 
-1. Create a storage account:
-
-   - Go to [Azure Portal](https://portal.azure.com)
-   - Search for "Storage accounts"
-   - Click "Create"
-   - Select your subscription and resource group
-   - Choose a region
-   - Select "Standard" performance
-   - Choose "LRS" redundancy
-   - Enable blob storage
-
-2. Create a container:
-
-   - Go to your storage account
-   - Navigate to "Containers"
-   - Click "Create container"
-   - Name it "uploads"
-   - Set access level to "Private"
-
-3. Get your storage credentials:
-   - Go to "Access keys"
-   - Copy the storage account name
-   - Copy one of the access keys
+1. Go to [Azure Portal](https://portal.azure.com)
+2. Search for "Storage accounts"
+3. Click "Create"
+4. Choose a unique name (3-24 characters, lowercase letters and numbers only)
+5. Select your subscription and resource group
+6. Choose a region
+7. Configure the following settings:
+   - Performance: Standard
+   - Redundancy: Locally-redundant storage (LRS)
+   - Primary service: Blob Storage
+   - Access tier: Hot
+   - Minimum TLS version: Version 1.2
+8. Click "Review + create"
+9. After the storage account is created:
+   1. Go to your storage account in Azure Portal
+   2. Click "Data storage" in the left menu
+   3. Click "Containers"
+   4. Click "+ Container"
+   5. Name it "uploads"
+   6. Set the access level to "Private"
+   7. Click "Create"
+10. After creation, note your storage account name and access key.
 
 ### 3. Resource Requirements
 
@@ -120,119 +119,29 @@ If you want to deploy from your own fork:
    Replace `{YOUR_USERNAME}` with your GitHub username
 3. Use the deployment button in your fork's README
 
-### Deployment Parameters
+## Deployment Parameters
 
-When deploying, you'll need to provide the following parameters:
+When filling out the Custom Deployment form, you'll need:
 
-#### Required Parameters
+- **Subscription**: Your Azure subscription
+- **Resource Group**: Your resource group
+- **Region**: The region for deployment
+- **OpenAI Name**: Name of your existing Azure OpenAI resource (see Detailed Setup Guide)
+- **Storage Account Name**: Name of your existing Azure Storage account (see Detailed Setup Guide)
+- **Static Web App Name**: Unique name for your Static Web App
+- **App Service Plan Name**: Name for your App Service Plan
+- **App Service Name**: Unique name for your App Service
+- **(Optional) Container Name**: Defaults to "uploads" (see Detailed Setup Guide)
 
-1. **Subscription**
-
-   - Select your Azure subscription from the dropdown
-   - If you don't see your subscription, ensure you have the correct permissions
-
-2. **Resource Group**
-
-   - Select an existing resource group or create a new one
-   - To create a new one:
-     1. Go to [Azure Portal](https://portal.azure.com)
-     2. Click "Resource groups"
-     3. Click "Create"
-     4. Choose a name and region
-     5. Click "Review + create"
-
-3. **Region**
-
-   - Select the Azure region where you want to deploy
-   - Choose a region that supports all required services:
-     - Azure OpenAI
-     - Azure Storage
-     - App Service
-     - Static Web Apps
-
-4. **OpenAI Name**
-
-   - This is the name of your Azure OpenAI resource
-   - If you haven't created it yet:
-     1. Go to [Azure Portal](https://portal.azure.com)
-     2. Search for "Azure OpenAI"
-     3. Click "Create"
-     4. Choose a unique name
-     5. Select your subscription and resource group
-     6. Choose a supported region
-     7. Click "Review + create"
-
-5. **Storage Account Name**
-
-   - This is the name of your Azure Storage account
-   - If you haven't created it yet:
-     1. Go to [Azure Portal](https://portal.azure.com)
-     2. Search for "Storage accounts"
-     3. Click "Create"
-     4. Choose a unique name (3-24 characters, lowercase letters and numbers only)
-     5. Select your subscription and resource group
-     6. Choose a region
-     7. Configure the following settings:
-        - Performance: Standard
-        - Redundancy: Locally-redundant storage (LRS)
-        - Primary service: Blob Storage
-        - Access tier: Hot
-        - Minimum TLS version: Version 1.2
-     8. Click "Review + create"
-
-6. **Static Web App Name**
-
-   - Choose a unique name for your Static Web App
-   - This will be part of your application's URL: `{name}.azurestaticapps.net`
-   - Must be 2-60 characters long
-   - Can contain letters, numbers, and hyphens
-
-7. **App Service Plan Name**
-
-   - Choose a name for your App Service Plan
-   - This defines the compute resources for your application
-   - Must be 1-40 characters long
-   - Can contain letters, numbers, and hyphens
-
-8. **App Service Name**
-   - Choose a unique name for your App Service
-   - This will be part of your API's URL: `{name}.azurewebsites.net`
-   - Must be 2-60 characters long
-   - Can contain letters, numbers, and hyphens
-
-#### Optional Parameters
-
-1. **Container Name**
-   - Default: "uploads"
-   - This is the name of the blob container in your storage account
-   - If you haven't created it yet:
-     1. Go to your storage account in Azure Portal
-     2. Click "Containers"
-     3. Click "Create container"
-     4. Enter "uploads" as the name
-     5. Set access level to "Private"
-     6. Click "Create"
-
-#### Important Notes
-
-- All names must be globally unique within Azure
-- Resource names cannot contain spaces or special characters
-- Some services have specific naming requirements (e.g., storage accounts must be lowercase)
-- It's recommended to use a consistent naming convention across all resources
-- Make sure to note down all names and credentials for future reference
+_Reference the Detailed Setup Guide above for how to create or find these values._
 
 ## Quick Start
 
-1. Click the "Deploy to Azure" button above
-2. Fill in the required parameters:
-   - Azure OpenAI endpoint
-   - Azure OpenAI API key
-   - Chat completion deployment name
-   - Embedding deployment name
-   - Storage account name
-   - Storage account key
-3. Wait for deployment to complete
-4. Access the application via the provided URL
+1. Complete the steps in the Detailed Setup Guide
+2. Click the "Deploy to Azure" button above
+3. Fill in the required parameters in the Custom Deployment form
+4. Wait for deployment to complete
+5. Access the application via the provided URL
 
 ## Manual Setup
 
@@ -256,23 +165,45 @@ uvicorn app.main:app --reload
 
 ## Environment Variables
 
-### Frontend
+### Frontend Setup
 
-```env
-VITE_API_URL=http://localhost:8000
-```
+1. Copy the example environment file:
+   ```bash
+   cd frontend
+   cp .env.example .env
+   ```
+2. Update the values in `.env`:
+   ```env
+   VITE_API_URL=http://localhost:8000
+   ```
 
-### Backend
+### Backend Setup
 
-```env
-AZURE_STORAGE_ACCOUNT=your_storage_account
-AZURE_STORAGE_KEY=your_storage_key
-STORAGE_CONTAINER=uploads
-AZURE_OPENAI_ENDPOINT=your_openai_endpoint
-AZURE_OPENAI_API_KEY=your_openai_key
-AZURE_OPENAI_CHAT_DEPLOYMENT=your_chat_deployment
-AZURE_OPENAI_EMBEDDING_DEPLOYMENT=your_embedding_deployment
-```
+1. Copy the example environment file:
+   ```bash
+   cd backend
+   cp .env.example .env
+   ```
+2. Update the values in `.env`:
+
+   ```env
+   # Azure Storage Configuration
+   AZURE_STORAGE_ACCOUNT=your_storage_account
+   AZURE_STORAGE_KEY=your_storage_key
+   STORAGE_CONTAINER=uploads
+
+   # Azure OpenAI Configuration
+   AZURE_OPENAI_ENDPOINT=your_openai_endpoint
+   AZURE_OPENAI_API_KEY=your_openai_key
+   AZURE_OPENAI_CHAT_DEPLOYMENT=your_chat_deployment
+   AZURE_OPENAI_EMBEDDING_DEPLOYMENT=your_embedding_deployment
+
+   # Server Configuration
+   PORT=8000
+   HOST=0.0.0.0
+   ```
+
+> **Note**: Never commit `.env` files to version control. They contain sensitive information and should be kept local to your development environment.
 
 ## Architecture
 
