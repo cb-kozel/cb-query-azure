@@ -1,5 +1,6 @@
 name: Code Quality
 
+# This workflow runs code quality checks on push to main and pull requests
 on:
   push:
     branches: [main]
