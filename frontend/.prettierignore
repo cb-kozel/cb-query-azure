@@ -1,0 +1,19 @@
+# Build output
+dist
+build
+
+# Dependencies
+node_modules
+
+# Coverage directory
+coverage
+
+# Cache
+.cache
+.temp
+
+# Logs
+*.log
+
+# Environment files
+.env* 
