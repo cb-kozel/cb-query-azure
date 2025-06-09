@@ -2,6 +2,97 @@
 
 A full-stack application for querying and analyzing business and technical documents using Azure OpenAI services.
 
+## Features
+
+- Upload and analyze Executive Overview documents (Markdown)
+- Upload and analyze Technical Specifications (JSON)
+- Natural language querying powered by Azure OpenAI
+- Mermaid diagram rendering
+- Secure file storage in Azure Blob Storage
+- Dark-themed, responsive UI
+
+## Prerequisites
+
+- Azure subscription
+  - If you don't have one, [create a free Azure account](https://azure.microsoft.com/free/)
+  - Ensure your subscription has access to Azure OpenAI services
+- Azure OpenAI service with:
+  - Chat completion deployment
+  - Embedding deployment
+  - [Request access to Azure OpenAI](https://aka.ms/oai/access) if you haven't already
+- Azure Storage account
+  - [Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-create)
+  - Enable blob storage
+  - Create a container named 'uploads'
+- Required Azure permissions:
+  - Owner or Contributor role on the subscription/resource group
+  - Storage Blob Data Contributor role for the storage account
+  - Azure OpenAI User role for the OpenAI service
+
+## Detailed Setup Guide
+
+### 1. Azure OpenAI Setup
+
+1. Create an Azure OpenAI resource:
+
+   - Go to [Azure Portal](https://portal.azure.com)
+   - Search for "Azure OpenAI"
+   - Click "Create"
+   - Select your subscription and resource group
+   - Choose a region where Azure OpenAI is available
+   - Create deployments for:
+     - Chat completion (e.g., gpt-35-turbo)
+     - Embedding (e.g., text-embedding-ada-002)
+
+2. Get your Azure OpenAI credentials:
+   - Note down the endpoint URL
+   - Generate an API key from the "Keys and Endpoint" section
+   - Record the deployment names you created
+
+### 2. Azure Storage Setup
+
+1. Create a storage account:
+
+   - Go to [Azure Portal](https://portal.azure.com)
+   - Search for "Storage accounts"
+   - Click "Create"
+   - Select your subscription and resource group
+   - Choose a region
+   - Select "Standard" performance
+   - Choose "LRS" redundancy
+   - Enable blob storage
+
+2. Create a container:
+
+   - Go to your storage account
+   - Navigate to "Containers"
+   - Click "Create container"
+   - Name it "uploads"
+   - Set access level to "Private"
+
+3. Get your storage credentials:
+   - Go to "Access keys"
+   - Copy the storage account name
+   - Copy one of the access keys
+
+### 3. Resource Requirements
+
+- Minimum recommended resources:
+  - Azure OpenAI: Standard tier
+  - Storage: Standard LRS, 100GB minimum
+  - App Service: B1 tier or higher
+  - Static Web App: Free tier or higher
+
+### 4. Network Requirements
+
+- Outbound internet access for:
+  - Azure OpenAI API
+  - Azure Storage
+  - GitHub (for deployment)
+- Inbound access:
+  - HTTP/HTTPS (80/443) for web application
+  - API endpoints (8000 by default)
+
 ## Deployment
 
 ### Option 1: Deploy from this repository
@@ -31,31 +122,104 @@ If you want to deploy from your own fork:
 
 ### Deployment Parameters
 
-When deploying, you'll need to provide:
+When deploying, you'll need to provide the following parameters:
 
-- Azure OpenAI endpoint
-- Azure OpenAI API key
-- Chat completion deployment name
-- Embedding deployment name
-- Storage account name
-- Storage account key
+#### Required Parameters
 
-## Features
+1. **Subscription**
 
-- Upload and analyze Executive Overview documents (Markdown)
-- Upload and analyze Technical Specifications (JSON)
-- Natural language querying powered by Azure OpenAI
-- Mermaid diagram rendering
-- Secure file storage in Azure Blob Storage
-- Dark-themed, responsive UI
+   - Select your Azure subscription from the dropdown
+   - If you don't see your subscription, ensure you have the correct permissions
 
-## Prerequisites
+2. **Resource Group**
 
-- Azure subscription
-- Azure OpenAI service with:
-  - Chat completion deployment
-  - Embedding deployment
-- Azure Storage account
+   - Select an existing resource group or create a new one
+   - To create a new one:
+     1. Go to [Azure Portal](https://portal.azure.com)
+     2. Click "Resource groups"
+     3. Click "Create"
+     4. Choose a name and region
+     5. Click "Review + create"
+
+3. **Region**
+
+   - Select the Azure region where you want to deploy
+   - Choose a region that supports all required services:
+     - Azure OpenAI
+     - Azure Storage
+     - App Service
+     - Static Web Apps
+
+4. **OpenAI Name**
+
+   - This is the name of your Azure OpenAI resource
+   - If you haven't created it yet:
+     1. Go to [Azure Portal](https://portal.azure.com)
+     2. Search for "Azure OpenAI"
+     3. Click "Create"
+     4. Choose a unique name
+     5. Select your subscription and resource group
+     6. Choose a supported region
+     7. Click "Review + create"
+
+5. **Storage Account Name**
+
+   - This is the name of your Azure Storage account
+   - If you haven't created it yet:
+     1. Go to [Azure Portal](https://portal.azure.com)
+     2. Search for "Storage accounts"
+     3. Click "Create"
+     4. Choose a unique name (3-24 characters, lowercase letters and numbers only)
+     5. Select your subscription and resource group
+     6. Choose a region
+     7. Configure the following settings:
+        - Performance: Standard
+        - Redundancy: Locally-redundant storage (LRS)
+        - Primary service: Blob Storage
+        - Access tier: Hot
+        - Minimum TLS version: Version 1.2
+     8. Click "Review + create"
+
+6. **Static Web App Name**
+
+   - Choose a unique name for your Static Web App
+   - This will be part of your application's URL: `{name}.azurestaticapps.net`
+   - Must be 2-60 characters long
+   - Can contain letters, numbers, and hyphens
+
+7. **App Service Plan Name**
+
+   - Choose a name for your App Service Plan
+   - This defines the compute resources for your application
+   - Must be 1-40 characters long
+   - Can contain letters, numbers, and hyphens
+
+8. **App Service Name**
+   - Choose a unique name for your App Service
+   - This will be part of your API's URL: `{name}.azurewebsites.net`
+   - Must be 2-60 characters long
+   - Can contain letters, numbers, and hyphens
+
+#### Optional Parameters
+
+1. **Container Name**
+   - Default: "uploads"
+   - This is the name of the blob container in your storage account
+   - If you haven't created it yet:
+     1. Go to your storage account in Azure Portal
+     2. Click "Containers"
+     3. Click "Create container"
+     4. Enter "uploads" as the name
+     5. Set access level to "Private"
+     6. Click "Create"
+
+#### Important Notes
+
+- All names must be globally unique within Azure
+- Resource names cannot contain spaces or special characters
+- Some services have specific naming requirements (e.g., storage accounts must be lowercase)
+- It's recommended to use a consistent naming convention across all resources
+- Make sure to note down all names and credentials for future reference
 
 ## Quick Start
 
