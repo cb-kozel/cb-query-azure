@@ -2,7 +2,36 @@
 
 A full-stack application for querying and analyzing business and technical documents using Azure OpenAI services.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2F${GITHUB_REPOSITORY}%2Fmain%2Fazure%2Fmain.bicep)
+## Deployment
+
+### Option 1: Deploy from this repository
+
+Click the button below to deploy directly from this repository:
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcb-kozel%2Fcb-query-azure%2Fmain%2Fazure%2Fmain.bicep)
+
+### Option 2: Deploy from your fork
+
+If you want to deploy from your own fork:
+
+1. Fork this repository
+2. Update the deployment URL in your fork's README.md:
+   ```markdown
+   [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2F{YOUR_USERNAME}%2Fcb-query-azure%2Fmain%2Fazure%2Fmain.bicep)
+   ```
+   Replace `{YOUR_USERNAME}` with your GitHub username
+3. Use the deployment button in your fork's README
+
+### Deployment Parameters
+
+When deploying, you'll need to provide:
+
+- Azure OpenAI endpoint
+- Azure OpenAI API key
+- Chat completion deployment name
+- Embedding deployment name
+- Storage account name
+- Storage account key
 
 ## Features
 
