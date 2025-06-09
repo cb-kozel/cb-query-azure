@@ -1,0 +1,92 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Cursor Project Rules
+
+## General Workflow
+- Always read **PLANNING.md** before starting work.
+- Always check **TASK.md** before starting a new task.
+- Mark tasks complete in **TASK.md**.
+- New discoveries under "Discovered During Work".
+
+## Code Structure
+- No file longer than **500 lines**.
+- Feature-based modular structure.
+- Confirm file paths and module names before referencing.
+- Validate Mermaid syntax and JSON structure on upload.
+
+## Frontend (Vite + TypeScript + TailwindCSS)
+- Use **TypeScript**.
+- **TailwindCSS** only — no inline CSS.
+- Dark mode enabled via Tailwind `darkMode: 'class'`.
+- GitHub-style theme:
+  - Background: `#0d1117`
+  - Surface: `#161b22`
+  - Text Primary: `#c9d1d9`
+  - Text Secondary: `#8b949e`
+- Use `rounded-2xl`, `shadow-md`, responsive layout.
+- Use `VITE_API_URL` environment variable.
+
+## Backend (FastAPI)
+- Secure upload and validation of `.md` and `.json`.
+- Store files in **Azure Blob Storage**.
+- **Azure OpenAI** for:
+  - `ChatCompletion` (answering).
+  - `Embeddings` (semantic search).
+- Backend environment variables:
+  - `AZURE_STORAGE_ACCOUNT`
+  - `AZURE_STORAGE_KEY`
+  - `STORAGE_CONTAINER`
+  - `AZURE_OPENAI_ENDPOINT`
+  - `AZURE_OPENAI_API_KEY`
+  - `AZURE_OPENAI_CHAT_DEPLOYMENT`
+  - `AZURE_OPENAI_EMBEDDING_DEPLOYMENT`
+
+## Azure Deployment
+- Must be deployable via **One-Click Deploy to Azure**.
+- Infrastructure managed via **Bicep** or **Terraform** templates.
+- Store environment variables securely via Azure App Settings or Key Vault.
+
+## Client Handoff
+- README must include:
+  - Clear Azure deployment steps.
+  - List of required environment variables.
+  - OpenAI deployment names instructions.
+- Minimal setup: Azure OpenAI details and Storage details only.
+
+## State Management
+- **React Context API** for state management.
+- Separate contexts for uploads, queries.
+- Use `useReducer` for complex state.
+- Reducers must be pure.
+- Memoize context values.
+
+## Testing
+- **Vitest** + **React Testing Library** for frontend testing.
+- Every new component/hook must have:
+  - 1 success case.
+  - 1 edge case.
+  - 1 failure case.
+- Tests live in `__tests__` folders beside components.
+
+## Documentation
+- Update **README.md** with any setup, infra, env variable changes.
+- Use inline `// Reason:` comments.
+- Use JSDoc for complex logic and hooks.
+
+## Azure OpenAI / LLM
+- Only answer based on indexed documents.
+- Validate Mermaid diagrams before rendering.
+- Prefer retrieval + generation (RAG).
+- Use Azure OpenAI services — no direct OpenAI API.
+
+## Naming Conventions
+- **PascalCase** for components.
+- **camelCase** for functions/variables/hooks.
+- **SCREAMING_SNAKE_CASE** for constants.
+- **kebab-case** for filenames.
+
+## Final Rule
+If unsure about architecture, Azure resources, or deployment — **ask first** before proceeding.
