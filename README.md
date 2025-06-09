@@ -228,6 +228,47 @@ uvicorn app.main:app --reload
 4. Push to the branch
 5. Create a Pull Request
 
+## Code Quality
+
+### Local Development
+
+The project uses several tools to maintain code quality:
+
+- **ESLint**: For code linting and style enforcement
+- **Prettier**: For code formatting
+- **Husky**: For pre-commit hooks
+- **lint-staged**: For running linters on staged files
+
+These tools are automatically run when you commit changes. If there are any issues, the commit will be blocked until they are fixed.
+
+### Manual Code Review Process
+
+Since GitHub Actions is not available at the organization level, please follow these steps during code review:
+
+1. **Before submitting a PR**:
+
+   ```bash
+   # Run all linting checks
+   npm run lint
+
+   # Check formatting
+   npm run format:check
+   ```
+
+2. **During PR Review**:
+
+   - Verify that all linting and formatting checks pass
+   - Check for any TypeScript errors
+   - Ensure all tests pass
+   - Review code style and formatting
+
+3. **Common Issues to Check**:
+   - Unused variables or imports
+   - Proper TypeScript types
+   - Consistent code formatting
+   - Proper error handling
+   - Test coverage
+
 ## License
 
 MIT License - see LICENSE file for details

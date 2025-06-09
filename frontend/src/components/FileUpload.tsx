@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { ArrowUpTrayIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import { ArrowUpTrayIcon, DocumentIcon } from "@heroicons/react/24/outline";
 
 interface FileUploadProps {
   onUpload: (file: File) => Promise<void>;
@@ -23,23 +23,27 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       try {
         await onUpload(file);
       } catch (err) {
-        setError('Error uploading file. Please try again.');
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Error uploading file. Please try again.",
+        );
       }
     },
-    [onUpload]
+    [onUpload],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'text/markdown': ['.md'],
-      'application/json': ['.json'],
+      "text/markdown": [".md"],
+      "application/json": [".json"],
     },
     maxFiles: 1,
   });
 
   return (
-    <div className='w-full max-w-2xl mx-auto'>
+    <div className="w-full max-w-2xl mx-auto">
       <div
         {...getRootProps()}
         className={`
@@ -48,13 +52,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           cursor-pointer transition-colors
           ${
             isDragActive
-              ? 'border-accent bg-accent/10'
-              : 'border-text-secondary/20'
+              ? "border-accent bg-accent/10"
+              : "border-text-secondary/20"
           }
           ${
             isUploading
-              ? 'opacity-50 cursor-not-allowed'
-              : 'hover:border-accent'
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:border-accent"
           }
         `}
       >
@@ -62,25 +66,25 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           {...getInputProps()}
           disabled={isUploading}
           aria-label={
-            isDragActive ? 'Drop the file here' : 'Drag & drop a file here'
+            isDragActive ? "Drop the file here" : "Drag & drop a file here"
           }
         />
 
         {isUploading ? (
-          <div className='flex flex-col items-center'>
-            <DocumentIcon className='w-12 h-12 text-text-secondary mb-4' />
-            <p className='text-text-secondary'>Uploading...</p>
+          <div className="flex flex-col items-center">
+            <DocumentIcon className="w-12 h-12 text-text-secondary mb-4" />
+            <p className="text-text-secondary">Uploading...</p>
           </div>
         ) : (
-          <div className='flex flex-col items-center'>
-            <ArrowUpTrayIcon className='w-12 h-12 text-text-secondary mb-4' />
-            <p className='text-text-primary text-lg mb-2'>
-              {isDragActive ? 'Drop the file here' : 'Drag & drop a file here'}
+          <div className="flex flex-col items-center">
+            <ArrowUpTrayIcon className="w-12 h-12 text-text-secondary mb-4" />
+            <p className="text-text-primary text-lg mb-2">
+              {isDragActive ? "Drop the file here" : "Drag & drop a file here"}
             </p>
-            <p className='text-text-secondary text-sm'>
+            <p className="text-text-secondary text-sm">
               or click to select a file
             </p>
-            <p className='text-text-secondary text-xs mt-2'>
+            <p className="text-text-secondary text-xs mt-2">
               Supported formats: .md, .json
             </p>
           </div>
@@ -88,7 +92,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       </div>
 
       {error && (
-        <p className='text-red-500 text-sm mt-2 text-center'>{error}</p>
+        <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
       )}
     </div>
   );

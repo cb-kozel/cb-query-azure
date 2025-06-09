@@ -1,15 +1,7 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import type { FileUploadResponse } from '../services/api';
-import { uploadFile } from '../services/api';
-
-interface FileContextType {
-  files: FileUploadResponse[];
-  isUploading: boolean;
-  uploadError: string | null;
-  uploadNewFile: (file: File) => Promise<void>;
-}
-
-const FileContext = createContext<FileContextType | null>(null);
+import React, { useState, useCallback } from "react";
+import { FileContext } from "./FileContext";
+import { uploadFile } from "../services/api";
+import type { FileUploadResponse } from "../services/api";
 
 export const FileProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -26,7 +18,7 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({
       const response = await uploadFile(file);
       setFiles((prev) => [...prev, response]);
     } catch (error) {
-      setUploadError('Failed to upload file. Please try again.');
+      setUploadError("Failed to upload file. Please try again.");
       throw error;
     } finally {
       setIsUploading(false);
@@ -45,12 +37,4 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </FileContext.Provider>
   );
-};
-
-export const useFileContext = () => {
-  const context = useContext(FileContext);
-  if (!context) {
-    throw new Error('useFileContext must be used within a FileProvider');
-  }
-  return context;
 };
