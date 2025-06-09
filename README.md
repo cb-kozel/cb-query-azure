@@ -8,7 +8,9 @@ A full-stack application for querying and analyzing business and technical docum
 
 Click the button below to deploy directly from this repository:
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcb-kozel%2Fcb-query-azure%2Fmain%2Fazure%2Fmain.json){:target="\_blank"}
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcb-kozel%2Fcb-query-azure%2Fmain%2Fazure%2Fmain.json" target="_blank">
+<img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure"/>
+</a>
 
 ### Option 2: Deploy from your fork
 
@@ -16,8 +18,13 @@ If you want to deploy from your own fork:
 
 1. Fork this repository
 2. Update the deployment URL in your fork's README.md:
-   ```markdown
-   [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2F{YOUR_USERNAME}%2Fcb-query-azure%2Fmain%2Fazure%2Fmain.json){:target="\_blank"}
+   ```html
+   <a
+     href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2F{YOUR_USERNAME}%2Fcb-query-azure%2Fmain%2Fazure%2Fmain.json"
+     target="_blank"
+   >
+     <img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" />
+   </a>
    ```
    Replace `{YOUR_USERNAME}` with your GitHub username
 3. Use the deployment button in your fork's README
