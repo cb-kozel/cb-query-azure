@@ -20,15 +20,6 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
       if (!file) return;
 
-      // Validate file type
-      const isMarkdown = file.name.endsWith('.md');
-      const isJson = file.name.endsWith('.json');
-
-      if (!isMarkdown && !isJson) {
-        setError('Please upload a Markdown (.md) or JSON (.json) file');
-        return;
-      }
-
       try {
         await onUpload(file);
       } catch (err) {
@@ -67,7 +58,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           }
         `}
       >
-        <input {...getInputProps()} disabled={isUploading} />
+        <input
+          {...getInputProps()}
+          disabled={isUploading}
+          aria-label={
+            isDragActive ? 'Drop the file here' : 'Drag & drop a file here'
+          }
+        />
 
         {isUploading ? (
           <div className='flex flex-col items-center'>
