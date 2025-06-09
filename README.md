@@ -2,7 +2,7 @@
 
 A full-stack application for querying and analyzing business and technical documents using Azure OpenAI services.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fyour-org%2Fcrowdbotics-query-tool%2Fmain%2Fazure%2Fmain.bicep)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2F${GITHUB_REPOSITORY}%2Fmain%2Fazure%2Fmain.bicep)
 
 ## Features
 
